@@ -13,8 +13,11 @@ Observamos como ponto de melhoria o sistema de reservas de livros, devido à int
 ## Integrantes
 
 Gabriel Fidalgo - RM563213
+
 Gustavo Maia - RM562240
+
 Gusatavo Rossi - RM566075
+
 Pedro Lima - RM565461
 
 ## Como rodar o projeto
