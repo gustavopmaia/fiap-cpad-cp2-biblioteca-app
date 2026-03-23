@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -8,12 +9,18 @@ import {
   View,
 } from "react-native";
 
-import { books } from "../../books";
+import { useBooks } from "../../books-context";
 
 export default function BookPage() {
+  const { books, rentBook } = useBooks();
   const { id } = useLocalSearchParams<{ id?: string | string[] }>();
-  const bookId = Array.isArray(id) ? id[0] : id;
-  const book = Object.values(books).find((item) => item.id === Number(bookId));
+  const bookId = Number(Array.isArray(id) ? id[0] : id);
+  const book = books[bookId];
+
+  function handleRentBook() {
+    rentBook(book.id);
+    Alert.alert("Sucesso", "Livro alugado com sucesso.");
+  }
 
   if (!book) {
     return (
@@ -34,8 +41,14 @@ export default function BookPage() {
       <Text style={styles.author}>{book.author}</Text>
       <Text style={styles.year}>Ano de lançamento: {book.year}</Text>
       <Text style={styles.description}>{book.description}</Text>
+      {book.isRent && <Text style={styles.status}>Esse livro já está alugado.</Text>}
 
-      <TouchableOpacity style={styles.button} activeOpacity={0.85}>
+      <TouchableOpacity
+        style={[styles.button, book.isRent && styles.buttonDisabled]}
+        activeOpacity={0.85}
+        disabled={book.isRent}
+        onPress={handleRentBook}
+      >
         <Text style={styles.buttonText}>Alugar livro</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -76,12 +89,21 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: "#C7C7CC",
   },
+  status: {
+    marginTop: 16,
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#E83D84",
+  },
   button: {
     marginTop: 24,
     backgroundColor: "#E83D84",
     borderRadius: 16,
     paddingVertical: 16,
     alignItems: "center",
+  },
+  buttonDisabled: {
+    backgroundColor: "#555962",
   },
   buttonText: {
     color: "#FFFFFF",

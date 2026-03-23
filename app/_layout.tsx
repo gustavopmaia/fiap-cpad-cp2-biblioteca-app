@@ -1,22 +1,26 @@
 import { Stack } from "expo-router";
 
+import { BooksProvider } from "../books-context";
+
 export default function Layout() {
   return (
-    <Stack screenOptions={screenOptions}>
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="livro/[id]"
-        options={{
-          title: "Detalhes do Livro",
-          headerBackButtonDisplayMode: "minimal",
-        }}
-      />
-    </Stack>
+    <BooksProvider>
+      <Stack screenOptions={screenOptions}>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="livro/[id]"
+          options={{
+            title: "Detalhes do Livro",
+            headerBackButtonDisplayMode: "minimal",
+          }}
+        />
+      </Stack>
+    </BooksProvider>
   );
 }
 

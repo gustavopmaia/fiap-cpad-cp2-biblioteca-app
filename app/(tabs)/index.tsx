@@ -8,11 +8,12 @@ import {
   View,
 } from "react-native";
 
-import { books } from "../../books";
-
-const booksList = Object.values(books);
+import { useBooks } from "../../books-context";
 
 export default function Home() {
+  const { books } = useBooks();
+  const booksList = Object.values(books);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Biblioteca Virtual</Text>
@@ -31,6 +32,7 @@ export default function Home() {
               <Text style={styles.bookName}>{book.title}</Text>
               <Text style={styles.author}>{book.author}</Text>
               <Text style={styles.year}>Ano de lançamento: {book.year}</Text>
+              {book.isRent && <Text style={styles.status}>Alugado</Text>}
             </View>
           </TouchableOpacity>
         ))}
@@ -89,5 +91,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 12,
     color: "#8E8E93",
+  },
+  status: {
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#E83D84",
   },
 });

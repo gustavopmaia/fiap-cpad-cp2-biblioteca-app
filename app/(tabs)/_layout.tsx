@@ -29,9 +29,15 @@ export default function TabsLayout() {
         options={{
           title: "Biblioteca Virtual",
           tabBarLabel: "Início",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="alugados"
+        options={{
+          title: "Livros Alugados",
+          tabBarLabel: "Alugados",
+          tabBarIcon: ({ color, size }) => <Ionicons name="book" size={size} color={color} />,
         }}
       />
     </Tabs>
