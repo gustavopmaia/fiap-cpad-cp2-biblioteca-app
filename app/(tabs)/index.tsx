@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -18,7 +19,12 @@ export default function Home() {
 
       <ScrollView contentContainerStyle={styles.list}>
         {booksList.map((book) => (
-          <TouchableOpacity key={book.id} style={styles.card} onPress={() => {}}>
+          <TouchableOpacity
+            key={book.id}
+            style={styles.card}
+            activeOpacity={0.85}
+            onPress={() => router.push(`/livro/${book.id}`)}
+          >
             <Image source={{ uri: book.image }} style={styles.image} />
 
             <View style={styles.content}>

@@ -9,6 +9,13 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="livro/[id]"
+        options={{
+          title: "Detalhes do Livro",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
     </Stack>
   );
 }
@@ -19,7 +26,7 @@ const screenOptions = {
   },
   headerTitleStyle: {
     color: "#FFFFFF",
-    fontWeight: "700",
+    fontWeight: "700" as const,
   },
   headerTintColor: "#E83D84",
   contentStyle: {
