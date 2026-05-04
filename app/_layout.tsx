@@ -3,7 +3,7 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 
 import { BooksProvider } from '../books-context';
 import { AuthProvider, useAuth } from '../context/AuthContext';
-import { ThemeProvider } from '../context/ThemeContext';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
 
 function AuthRedirect() {
   const { user, isLoading } = useAuth();
@@ -25,39 +25,37 @@ function AuthRedirect() {
   return null;
 }
 
-export default function Layout() {
+function AppStack() {
+  const { colors } = useTheme();
+
   return (
-    <ThemeProvider>
-    <AuthProvider>
-      <BooksProvider>
-        <AuthRedirect />
-        <Stack screenOptions={screenOptions}>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="livro/[id]"
-            options={{
-              title: 'Detalhes do Livro',
-              headerBackButtonDisplayMode: 'minimal',
-            }}
-          />
-        </Stack>
-      </BooksProvider>
-    </AuthProvider>
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.card },
+        headerTitleStyle: { color: colors.text, fontWeight: '700' as const },
+        headerTintColor: colors.accent,
+        contentStyle: { backgroundColor: colors.background },
+      }}
+    >
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="livro/[id]"
+        options={{ title: 'Detalhes do Livro', headerBackButtonDisplayMode: 'minimal' }}
+      />
+    </Stack>
   );
 }
 
-const screenOptions = {
-  headerStyle: {
-    backgroundColor: '#0F1115',
-  },
-  headerTitleStyle: {
-    color: '#FFFFFF',
-    fontWeight: '700' as const,
-  },
-  headerTintColor: '#E83D84',
-  contentStyle: {
-    backgroundColor: '#0F1115',
-  },
-};
+export default function Layout() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <BooksProvider>
+          <AuthRedirect />
+          <AppStack />
+        </BooksProvider>
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
