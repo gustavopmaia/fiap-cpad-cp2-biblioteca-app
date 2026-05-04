@@ -1,32 +1,31 @@
 import { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { Stack, useRouter, useSegments } from 'expo-router';
 
-import { BooksProvider } from '../books-context';
+import { BooksProvider } from '../context/BooksContext';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { ThemeProvider, useTheme } from '../context/ThemeContext';
 
-function AuthRedirect() {
+function AppStack() {
   const { user, isLoading } = useAuth();
+  const { colors } = useTheme();
   const segments = useSegments();
   const router = useRouter();
 
   useEffect(() => {
     if (isLoading) return;
-
     const inAuth = segments[0] === '(auth)';
-
-    if (!user && !inAuth) {
-      router.replace('/(auth)/login');
-    } else if (user && inAuth) {
-      router.replace('/(tabs)');
-    }
+    if (!user && !inAuth) router.replace('/(auth)/login');
+    else if (user && inAuth) router.replace('/(tabs)');
   }, [user, isLoading, segments]);
 
-  return null;
-}
-
-function AppStack() {
-  const { colors } = useTheme();
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background }}>
+        <ActivityIndicator size="large" color={colors.accent} />
+      </View>
+    );
+  }
 
   return (
     <Stack
@@ -52,7 +51,6 @@ export default function Layout() {
     <ThemeProvider>
       <AuthProvider>
         <BooksProvider>
-          <AuthRedirect />
           <AppStack />
         </BooksProvider>
       </AuthProvider>

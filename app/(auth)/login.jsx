@@ -73,7 +73,7 @@ export default function Login() {
       <TouchableOpacity
         style={[styles.botao, !podeSubmeter && styles.botaoDesabilitado]}
         onPress={handleLogin}
-        disabled={!podeSubmeter || loading}
+        disabled={loading}
       >
         <Text style={styles.botaoTexto}>{loading ? 'Entrando...' : 'Entrar'}</Text>
       </TouchableOpacity>
@@ -118,15 +118,15 @@ const styles = StyleSheet.create({
     borderColor: '#2A2D35',
   },
   inputErro: {
-    borderColor: '#E83D84',
+    borderColor: '#FF3B30',
   },
   erro: {
-    color: '#E83D84',
+    color: '#FF3B30',
     fontSize: 13,
     marginTop: 4,
   },
   erroGeral: {
-    color: '#E83D84',
+    color: '#FF3B30',
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 12,

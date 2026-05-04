@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-import { useBooks } from "../../books-context";
+import { useBooks } from "../../context/BooksContext";
 import { useTheme, themes } from "../../context/ThemeContext";
 
 type Colors = typeof themes.dark;

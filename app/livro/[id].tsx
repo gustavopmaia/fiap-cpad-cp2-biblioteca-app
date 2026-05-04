@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import {
-  Alert,
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { useBooks } from "../../books-context";
+import { useBooks } from "../../context/BooksContext";
 import { useTheme, themes } from "../../context/ThemeContext";
 
 type Colors = typeof themes.dark;
@@ -22,11 +23,15 @@ export default function BookPage() {
   const bookId = Number(Array.isArray(id) ? id[0] : id);
   const book = books[bookId];
 
+  const [loading, setLoading] = useState(false);
+
   const s = styles(colors);
 
-  function handleRentBook() {
+  async function handleRentBook() {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
     rentBook(book.id);
-    Alert.alert("Sucesso", "Livro alugado com sucesso.");
+    setLoading(false);
   }
 
   if (!book) {
@@ -59,14 +64,18 @@ export default function BookPage() {
       )}
 
       <TouchableOpacity
-        style={[s.button, book.isRent && s.buttonDisabled]}
+        style={[s.button, (book.isRent || loading) && s.buttonDisabled]}
         activeOpacity={0.85}
-        disabled={book.isRent}
+        disabled={book.isRent || loading}
         onPress={handleRentBook}
       >
-        <Text style={s.buttonText}>
-          {book.isRent ? "Indisponível para aluguel" : "Alugar livro"}
-        </Text>
+        {loading ? (
+          <ActivityIndicator color="#FFF" />
+        ) : (
+          <Text style={s.buttonText}>
+            {book.isRent ? "Indisponível para aluguel" : "Alugar livro"}
+          </Text>
+        )}
       </TouchableOpacity>
     </ScrollView>
   );
