@@ -22,10 +22,12 @@ export default function Cadastro() {
 
   function validate() {
     const errs = {};
-    if (!nome.trim()) errs.nome = 'Nome é obrigatório';
-    if (!EMAIL_REGEX.test(email)) errs.email = 'Email inválido';
-    if (senha.length < 6) errs.senha = 'Senha deve ter no mínimo 6 caracteres';
-    if (senha !== confirmar) errs.confirmar = 'As senhas não coincidem';
+    if (!nome.trim()) errs.nome = 'O nome é obrigatório';
+    if (!email.trim()) errs.email = 'O e-mail é obrigatório';
+    else if (!EMAIL_REGEX.test(email)) errs.email = 'Digite um e-mail válido (ex: nome@email.com)';
+    if (!senha) errs.senha = 'A senha é obrigatória';
+    else if (senha.length < 6) errs.senha = 'A senha deve ter no mínimo 6 caracteres';
+    if (senha && senha !== confirmar) errs.confirmar = 'As senhas não coincidem';
     return errs;
   }
 

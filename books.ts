@@ -6,6 +6,7 @@ export type Book = {
   image: string;
   description: string;
   isRent: boolean;
+  isFavorite: boolean;
 };
 
 export type Books = {
@@ -15,42 +16,47 @@ export type Books = {
 export const books: Books = {
   1: {
     id: 1,
-    title: "Livro 1",
-    author: "Gabriel Fidalgo",
-    year: 1234,
-    image:
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80",
-    description: "Um livro de exemplo para mostrar os detalhes na nova tela.",
+    title: "Clean Code",
+    author: "Robert C. Martin",
+    year: 2008,
+    image: "https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg",
+    description:
+      "Um guia de boas práticas para escrever código limpo, legível e fácil de manter. Robert Martin apresenta princípios, padrões e técnicas usadas por profissionais para produzir código de qualidade — referência padrão na área.",
     isRent: false,
+    isFavorite: false,
   },
   2: {
     id: 2,
-    title: "Teste 2",
-    author: "Gustavo Maia",
-    year: 1234,
-    image:
-      "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80",
-    description: "Outro livro da lista, agora com uma descrição simples.",
+    title: "The Pragmatic Programmer",
+    author: "Andrew Hunt e David Thomas",
+    year: 1999,
+    image: "https://covers.openlibrary.org/b/isbn/9780201616224-L.jpg",
+    description:
+      "Uma visão abrangente sobre a mentalidade e prática do desenvolvimento de software. Cobre desde filosofia de carreira até técnicas concretas, ensinando como ser um desenvolvedor de verdade — não apenas um técnico.",
     isRent: false,
+    isFavorite: false,
   },
   3: {
     id: 3,
-    title: "Teste 3",
-    author: "Gustavo Rossi",
-    year: 1234,
-    image:
-      "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=80",
-    description: "Esse livro serve para testar a navegação entre as páginas.",
+    title: "Design Patterns",
+    author: "Erich Gamma et al.",
+    year: 1994,
+    image: "https://covers.openlibrary.org/b/isbn/9780201633610-L.jpg",
+    description:
+      "O clássico da arquitetura de software, também conhecido como 'Gang of Four'. Apresenta 23 padrões de projeto orientado a objetos que resolvem problemas recorrentes de design — leitura obrigatória para quem pensa em arquitetura.",
     isRent: false,
+    isFavorite: false,
   },
   4: {
     id: 4,
-    title: "Teste 4",
-    author: "Pedro Lima",
-    year: 1234,
+    title: "You Don't Know JS (Yet)",
+    author: "Kyle Simpson",
+    year: 2015,
     image:
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80",
-    description: "Mais um item de exemplo para completar a listagem.",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4jZtjaMvLU0hqGTEYfZN43_foA3zn4nFEXA&s",
+    description:
+      "Uma série que mergulha fundo nos mecanismos internos do JavaScript — escopo, closures, this, protótipos e mais. Perfeito para quem trabalha com React Native e quer entender de verdade a linguagem por baixo.",
     isRent: false,
+    isFavorite: false,
   },
 };

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { useBooks } from "../../books-context";
 
@@ -41,7 +42,16 @@ export default function BookPage() {
       <Text style={styles.author}>{book.author}</Text>
       <Text style={styles.year}>Ano de lançamento: {book.year}</Text>
       <Text style={styles.description}>{book.description}</Text>
-      {book.isRent && <Text style={styles.status}>Esse livro já está alugado.</Text>}
+
+      {book.isRent && (
+        <View style={styles.alugadoBanner}>
+          <Ionicons name="time-outline" size={20} color="#FFF" />
+          <View>
+            <Text style={styles.alugadoBannerTitulo}>Livro indisponível</Text>
+            <Text style={styles.alugadoBannerSub}>Este exemplar está alugado no momento</Text>
+          </View>
+        </View>
+      )}
 
       <TouchableOpacity
         style={[styles.button, book.isRent && styles.buttonDisabled]}
@@ -49,7 +59,7 @@ export default function BookPage() {
         disabled={book.isRent}
         onPress={handleRentBook}
       >
-        <Text style={styles.buttonText}>Alugar livro</Text>
+        <Text style={styles.buttonText}>{book.isRent ? "Indisponível para aluguel" : "Alugar livro"}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -89,11 +99,24 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: "#C7C7CC",
   },
-  status: {
-    marginTop: 16,
-    fontSize: 14,
+  alugadoBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 20,
+    backgroundColor: "#E83D84",
+    borderRadius: 12,
+    padding: 14,
+  },
+  alugadoBannerTitulo: {
+    color: "#FFF",
     fontWeight: "700",
-    color: "#E83D84",
+    fontSize: 15,
+  },
+  alugadoBannerSub: {
+    color: "rgba(255,255,255,0.8)",
+    fontSize: 12,
+    marginTop: 2,
   },
   button: {
     marginTop: 24,

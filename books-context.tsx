@@ -10,6 +10,7 @@ type BooksContextData = {
   books: Books;
   rentBook: (id: number) => void;
   returnBook: (id: number) => void;
+  toggleFavorite: (id: number) => void;
 };
 
 const BooksContext = createContext<BooksContextData | null>(null);
@@ -40,15 +41,19 @@ export function BooksProvider({ children }: { children: ReactNode }) {
   function returnBook(id: number) {
     setBooks((current) => ({
       ...current,
-      [id]: {
-        ...current[id],
-        isRent: false,
-      },
+      [id]: { ...current[id], isRent: false },
+    }));
+  }
+
+  function toggleFavorite(id: number) {
+    setBooks((current) => ({
+      ...current,
+      [id]: { ...current[id], isFavorite: !current[id].isFavorite },
     }));
   }
 
   return (
-    <BooksContext.Provider value={{ books, rentBook, returnBook }}>
+    <BooksContext.Provider value={{ books, rentBook, returnBook, toggleFavorite }}>
       {children}
     </BooksContext.Provider>
   );
