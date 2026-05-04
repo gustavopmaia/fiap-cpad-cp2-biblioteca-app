@@ -3,6 +3,7 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 
 import { BooksProvider } from '../books-context';
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { ThemeProvider } from '../context/ThemeContext';
 
 function AuthRedirect() {
   const { user, isLoading } = useAuth();
@@ -26,6 +27,7 @@ function AuthRedirect() {
 
 export default function Layout() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <BooksProvider>
         <AuthRedirect />
@@ -42,6 +44,7 @@ export default function Layout() {
         </Stack>
       </BooksProvider>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

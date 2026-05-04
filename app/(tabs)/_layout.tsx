@@ -1,36 +1,42 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function TabsLayout() {
   const { logout } = useAuth();
+  const { theme, colors, toggleTheme } = useTheme();
 
   return (
     <Tabs
       screenOptions={{
         headerRight: () => (
-          <TouchableOpacity onPress={logout} style={{ marginRight: 16 }}>
-            <Ionicons name="log-out-outline" size={24} color="#E83D84" />
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", gap: 16, marginRight: 16 }}>
+            <TouchableOpacity onPress={toggleTheme}>
+              <Ionicons
+                name={theme === "dark" ? "sunny-outline" : "moon-outline"}
+                size={24}
+                color="#E83D84"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={logout}>
+              <Ionicons name="log-out-outline" size={24} color="#E83D84" />
+            </TouchableOpacity>
+          </View>
         ),
-        headerStyle: {
-          backgroundColor: "#0F1115",
-        },
-        headerTitleStyle: {
-          color: "#FFFFFF",
-          fontWeight: "700",
-        },
-        headerTintColor: "#E83D84",
+        headerStyle: { backgroundColor: colors.card },
+        headerTitleStyle: { color: colors.text, fontWeight: "700" },
+        headerTintColor: colors.accent,
         tabBarStyle: {
-          backgroundColor: "#12161D",
-          borderTopColor: "#262B36",
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
           height: 62,
           paddingBottom: 8,
           paddingTop: 8,
         },
-        tabBarActiveTintColor: "#E83D84",
-        tabBarInactiveTintColor: "#8E8E93",
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.textMuted,
       }}
     >
       <Tabs.Screen
