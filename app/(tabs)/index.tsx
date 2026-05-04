@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { router } from "expo-router";
 import {
   Image,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -12,13 +14,28 @@ import { useBooks } from "../../books-context";
 
 export default function Home() {
   const { books } = useBooks();
-  const booksList = Object.values(books);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const booksList = Object.values(books).filter((book) =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Biblioteca Virtual</Text>
 
+      <TextInput
+        style={styles.search}
+        placeholder="Buscar por título..."
+        placeholderTextColor="#666"
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+      />
+
       <ScrollView contentContainerStyle={styles.list}>
+        {booksList.length === 0 && (
+          <Text style={styles.emptyText}>Nenhum resultado encontrado.</Text>
+        )}
         {booksList.map((book) => (
           <TouchableOpacity
             key={book.id}
@@ -52,6 +69,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "#FFFFFF",
+  },
+  search: {
+    marginTop: 16,
+    backgroundColor: "#181C23",
+    borderWidth: 1,
+    borderColor: "#262B36",
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    fontSize: 15,
+    color: "#FFFFFF",
+  },
+  emptyText: {
+    marginTop: 32,
+    textAlign: "center",
+    fontSize: 14,
+    color: "#8E8E93",
   },
   list: {
     marginTop: 18,

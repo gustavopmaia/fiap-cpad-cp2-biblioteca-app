@@ -1,7 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { books as initialBooks } from "./books";
 import type { Books } from "./books";
+
+const BOOKS_KEY = "@app:books";
 
 type BooksContextData = {
   books: Books;
@@ -13,6 +16,16 @@ const BooksContext = createContext<BooksContextData | null>(null);
 
 export function BooksProvider({ children }: { children: ReactNode }) {
   const [books, setBooks] = useState(initialBooks);
+
+  useEffect(() => {
+    AsyncStorage.getItem(BOOKS_KEY).then((data) => {
+      if (data) setBooks(JSON.parse(data));
+    });
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem(BOOKS_KEY, JSON.stringify(books));
+  }, [books]);
 
   function rentBook(id: number) {
     setBooks((current) => ({
